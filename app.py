@@ -12,16 +12,13 @@ def usuario(nombre):
     return f'Bienvenido, {nombre}!'
 
 @app.route('/contacto')
-def contacto ():
-    return "Contacta con nosotros en"
+def contacto():
+    return "Contacta con nosotros en contacto@midominio.com"
 
 @app.route('/acerca')
-def acerca ():
-    return "Este es una aplicacion de ejemplo"
-
+def acerca():
+    return "Esta es una aplicación de ejemplo desarrollada en Flask."
 
 
 if __name__ == '__main__':
-    app.run(debug=True) 
-
-    
+    app.run(debug=True)
