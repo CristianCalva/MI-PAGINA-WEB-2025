@@ -15,9 +15,9 @@ def usuario(nombre):
 def contacto():
     return "Contacta con nosotros en contacto@midominio.com"
 
-@app.route('/informacion')
-def informacion():
-    return "Esta es una aplicación de ejemplo desarrollada en Flask."
+@app.route('/servicios')
+def servicios():
+    return "Aquí puedes ver todos los servicios que ofrece nuestra aplicación."
 
 
 if __name__ == '__main__':
