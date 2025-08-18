@@ -15,6 +15,10 @@ def usuario(nombre):
 def contacto ():
     return "Contacta con nosotros en"
 
+@app.route('/acerca')
+def acerca ():
+    return "Este es una aplicacion de ejemplo"
+
 
 
 if __name__ == '__main__':
