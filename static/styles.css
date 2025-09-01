@@ -1,24 +1,47 @@
 /* ====== RESET Y ESTILOS GENERALES ====== */
+/* ====== RESET ====== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+body, h1, h2, p, ul, li, a, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ====== BODY ====== */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f8f8;
     color: #333;
     line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+/* ====== RESET BÁSICO ====== */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Evita scroll horizontal */
 }
 
-a {
-    text-decoration: none;
-    color: #343fdb;
+/* ====== HERO BANNER ====== */
+.hero {
+    height: 100vh; /* altura completa de la ventana */
+    width: 100vw;  /* ancho completo de la ventana */
+    background-size: contain;    /* ajusta imagen completa dentro de la pantalla */
+    background-position: center; /* centra horizontal y vertical */
+    background-repeat: no-repeat; /* no repetir */
 }
 
-a:hover {
-    color: #2c3e50;
+
+
 }
 
 /* ====== HEADER Y NAVEGACIÓN ====== */
@@ -31,13 +54,13 @@ a:hover {
     display: flex;
     justify-content: center;
     gap: 40px;
+    flex-wrap: wrap;
 }
 
 .nav a {
     color: #fff;
     font-weight: bold;
     font-size: 18px;
-    transition: color 0.3s ease;
 }
 
 .nav a:hover {
@@ -52,6 +75,7 @@ a:hover {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    flex: 1; /* Para empujar el footer al final */
 }
 
 /* ====== TITULOS ====== */
@@ -101,14 +125,81 @@ ul li a:hover {
     color: #ffce00;
 }
 
+/* ====== BOTONES ====== */
+button, .btn {
+    background-color: #3498db; /* Azul suave para botones */
+    color: #fff;
+    padding: 6px 12px; /* Tamaño más pequeño */
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 2px;
+}
+
+button:hover, .btn:hover {
+    background-color: #2c3e50;
+    color: #ffce00;
+}
+
+/* Botones secundarios */
+.btn-secondary {
+    background-color: #95a5a6;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+/* ====== TABLAS ====== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* ====== FLASH MESSAGES ====== */
+.flash-container {
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+.flash {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.flash.success { background-color: #2ecc71; color: #fff; }
+.flash.info    { background-color: #3498db; color: #fff; }
+.flash.warning { background-color: #f39c12; color: #fff; }
+.flash.error   { background-color: #e74c3c; color: #fff; }
+
 /* ====== FOOTER ====== */
 .site-footer {
     background-color: #2c3e50;
     color: #fff;
     text-align: center;
     padding: 20px 0;
-    margin-top: 40px;
     font-size: 14px;
+    margin-top: auto; /* Esto asegura que el footer quede abajo */
 }
 
 .site-footer a {
@@ -141,5 +232,10 @@ ul li a:hover {
     ul {
         flex-direction: column;
         gap: 10px;
+    }
+
+    button, .btn {
+        font-size: 13px;
+        padding: 5px 10px;
     }
 }
