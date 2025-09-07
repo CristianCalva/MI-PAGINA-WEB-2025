@@ -31,3 +31,7 @@ Thumbs.db
 # Archivos específicos de tu editor (opcional)
 .vscode/
 .idea/
+database/usuarios.db
+datos/datos.csv/datos.json/datos.txt
+__pycache__
+procfiles/
