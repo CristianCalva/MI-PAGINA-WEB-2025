@@ -7,3 +7,27 @@ __pycache__/
 *.env
 venv/
 Mi Proyecto web/__pycache__/
+# Archivos de Python compilados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Entornos virtuales
+.venv/
+venv/
+*.env
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de base de datos locales (si quieres ignorarlos)
+# database/*.db
+
+# Carpetas de logs, caché, etc.
+*.log
+
+# Archivos específicos de tu editor (opcional)
+.vscode/
+.idea/

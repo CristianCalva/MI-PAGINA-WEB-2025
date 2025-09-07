@@ -1,9 +1,32 @@
-{% extends "base.html"%}
-{% block title %}Inicio{% endblock %}
+{% extends "layout.html" %}
+
+{% block title %}Inicio - UrbanWalk{% endblock %}
 
 {% block content %}
-<h1>UrbanWalk</h1>
-<p style="color: #b61f1fff; font-style: italic;">Estilo original, Solo en UrbanWalk</p>
+<div class="text-center">
+    <h1 class="mb-4">Bienvenido a UrbanWalk</h1>
+    <p class="lead">Estilo original, Solo en UrbanWalk.</p>
 
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-start">
+            <h3>¿Quiénes somos?</h3>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">👟 UrbanWalk es un almacén de calzado original, 
+                    especializado en ofrecer productos deportivos y casuales de alta calidad para toda la familia..</li>
+            </ul>
+
+            <h3 class="mt-4">Explora UrbanWalk</h3>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item">👟 Descubre nuestra colección de calzado deportivo y casual.</li>
+    <li class="list-group-item">🛒 Administra el inventario agregando, editando o eliminando productos fácilmente.</li>
+    <li class="list-group-item">📊 Revisa reportes de existencias y precios para tomar decisiones rápidas de compra.</li>
+</ul>
+
+<p class="mt-4">Empieza ahora navegando por nuestros productos o agregando nuevos artículos a tu inventario.</p>
+
+            <a href="{{ url_for('formulario') }}" class="btn btn-success btn-lg me-2">Ir al Formulario</a>
+            <a href="{{ url_for('leer_txt') }}" class="btn btn-outline-primary btn-lg">Ver Datos Guardados</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
-
