@@ -1,13 +1,17 @@
+from email import message
 from flask import Flask, render_template, redirect, url_for, flash, request
 from datetime import datetime
+from conexion.conexion import test_connection
 from modelo import db, Producto
 from formulario import ProductoForm
 from inventario import Inventario
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:@localhost/urbanwalk_db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///inventario.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'dev-secret-key'  # en producción usa variable de entorno
+
 
 db.init_app(app)
 
@@ -87,6 +91,12 @@ def eliminar_producto(pid):
     flash('Producto eliminado.' if ok else 'Producto no encontrado.', 'info' if ok else 'warning')
     return redirect(url_for('listar_productos'))
 
+# ruta para probar la conexión a la base de datos
+
+@app.route('/test-mysql-connection')
+def test_mysql_connection():
+    message = test_connection()
+    return f"<h1>Prueba de conexión a MySQL</h1><p>{message}</p>"
 
 if __name__ == '__main__':
     app.run(debug=True)
