@@ -1,9 +1,36 @@
+# Python
 __pycache__/
-*.__pycache__
 *.pyc
 *.pyo
 *.pyd
-.venv/
-*.env
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+*.exe
+
+# Entorno virtual
 venv/
-Mi Proyecto web/__pycache__/
+env/
+ENV/
+.venv/
+
+# Base de datos local (opcional - si no quieres subirlas)
+database/*.db
+datos/*.txt
+datos/*.json
+datos/*.csv
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

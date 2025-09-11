@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Inventario{% endblock %}
 
-{% block content %}
+{% block contenido %}
 <h1>Inventario</h1>
 
 <form method="get" action="{{ url_for('listar_productos') }}" class="form-inline">
@@ -29,8 +29,8 @@
       <td>{{ p.cantidad }}</td>
       <td>${{ '%.2f'|format(p.precio) }}</td>
       <td>
-        <a class="btn btn-small" href="{{ url_for('editar_producto', pid=p.id) }}">Editar</a>
-        <form method="post" action="{{ url_for('eliminar_producto', pid=p.id) }}" style="display:inline"
+        <a class="btn btn-small" href="{{ url_for('editar_producto', id=p.id) }}">Editar</a>
+        <form method="post" action="{{ url_for('eliminar_producto', id=p.id) }}" style="display:inline"
               onsubmit="return confirm('¿Eliminar {{ p.nombre }}?');">
           <button type="submit" class="btn btn-danger btn-small">Eliminar</button>
         </form>

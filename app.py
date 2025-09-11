@@ -1,102 +1,123 @@
-from email import message
+from pydoc import text
+from sys import version
 from flask import Flask, render_template, redirect, url_for, flash, request
 from datetime import datetime
-from conexion.conexion import test_connection
 from modelo import db, Producto
 from formulario import ProductoForm
-from inventario import Inventario
+from sqlalchemy import text
+import os
 
+# Crear la app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:@localhost/urbanwalk_db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///inventario.db'
+
+# Configuración de la base de datos (usa PyMySQL)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/urbanwalk_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'dev-secret-key'  # en producción usa variable de entorno
+app.config['SECRET_KEY'] = 'dev-secret-key'
 
-
+# Inicializar SQLAlchemy
 db.init_app(app)
 
-# Inyectar "now" para usar {{ now().year }} en templates si quieres
+# Inyectar variable 'now' para usar en plantillas
 @app.context_processor
 def inject_now():
     return {'now': datetime.utcnow}
 
+# Crear tablas al iniciar
 with app.app_context():
     db.create_all()
-    inventario = Inventario.cargar_desde_bd()  # cache en memoria con diccionario y set
 
+# --- RUTAS PRINCIPALES ---
 
-# --- Rutas existentes ---
+# Página de inicio
 @app.route('/')
 def index():
     return render_template('index.html', title='Inicio')
 
-@app.route('/usuario/<nombre>')
-def usuario(nombre):
-    return f'Bienvenido, {nombre}!'
-
-@app.route('/about/')
-def about():
-    return render_template('about.html', title='Acerca de')
-
-@app.route('/contacto/')
-def contacto():
-    return "Contactate con nosotros en @UrbanWalk"
-
-
-# --- Rutas de Productos ---
-
+# Lista de productos
 @app.route('/productos')
 def listar_productos():
-    q = request.args.get('q', '').strip()
-    productos = inventario.buscar_por_nombre(q) if q else inventario.listar_todos()
-    return render_template('productos/lista.html', title='Productos', productos=productos, q=q)
+    productos = Producto.query.all()
+    return render_template('productos/lista.html', title='Productos', productos=productos)
 
+# Crear producto
 @app.route('/productos/nuevo', methods=['GET', 'POST'])
 def crear_producto():
     form = ProductoForm()
     if form.validate_on_submit():
         try:
-            inventario.agregar(
+            nuevo_producto = Producto(
                 nombre=form.nombre.data,
                 cantidad=form.cantidad.data,
                 precio=form.precio.data
             )
+            db.session.add(nuevo_producto)
+            db.session.commit()
             flash('Producto agregado correctamente.', 'success')
             return redirect(url_for('listar_productos'))
-        except ValueError as e:
-            form.nombre.errors.append(str(e))
-    return render_template('productos/formulario.html', title='Nuevo producto', form=form, modo='crear')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al guardar: {str(e)}', 'danger')
+            # No retornamos aquí, queremos mostrar el formulario con errores
 
-@app.route('/productos/<int:pid>/editar', methods=['GET', 'POST'])
-def editar_producto(pid):
-    prod = Producto.query.get_or_404(pid)
-    form = ProductoForm(obj=prod)
+    return render_template('productos/formulario.html', title='Nuevo Producto', form=form)
+            
+@app.route('/productos/<int:id>/editar', methods=['GET', 'POST'])
+def editar_producto(id):
+    producto = Producto.query.get_or_404(id)
+    form = ProductoForm(obj=producto)
+
     if form.validate_on_submit():
         try:
-            inventario.actualizar(
-                id=pid,
-                nombre=form.nombre.data,
-                cantidad=form.cantidad.data,
-                precio=form.precio.data
-            )
-            flash('Producto actualizado.', 'success')
+            producto.nombre = form.nombre.data
+            producto.cantidad = form.cantidad.data
+            producto.precio = form.precio.data
+            db.session.commit()
+            flash('✅ Producto actualizado correctamente.', 'success')
             return redirect(url_for('listar_productos'))
-        except ValueError as e:
-            form.nombre.errors.append(str(e))
-    return render_template('productos/formulario.html', title='Editar producto', form=form, modo='editar')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar: {str(e)}', 'danger')
 
-@app.route('/productos/<int:pid>/eliminar', methods=['POST'])
-def eliminar_producto(pid):
-    ok = inventario.eliminar(pid)
-    flash('Producto eliminado.' if ok else 'Producto no encontrado.', 'info' if ok else 'warning')
+    return render_template('productos/formulario.html', title='Editar Producto', form=form)
+    
+    # Si hay error o es GET, muestra formulario
+    return render_template('productos/formulario.html', title='Nuevo Producto', form=form)
+
+# Eliminar producto
+@app.route('/productos/<int:id>/eliminar', methods=['POST'])
+def eliminar_producto(id):
+    producto = Producto.query.get_or_404(id)
+    try:
+        db.session.delete(producto)
+        db.session.commit()
+        flash('Producto eliminado.', 'info')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar: {str(e)}', 'danger')
     return redirect(url_for('listar_productos'))
 
-# ruta para probar la conexión a la base de datos
+# Acerca de
+@app.route('/about/')
+def about():
+    return render_template('about.html', title='Acerca de')
 
+# Contacto
+@app.route('/contacto/')
+def contacto():
+    return "Contactate con nosotros en @UrbanWalk"
+
+# Prueba de conexión (opcional)
 @app.route('/test-mysql-connection')
 def test_mysql_connection():
-    message = test_connection()
-    return f"<h1>Prueba de conexión a MySQL</h1><p>{message}</p>"
+    try:
+        with db.engine.connect() as connection:
+            result = connection.execute(text("SELECT VERSION();"))
+            version = result.scalar()
+            return f"Conexión exitosa a MySQL: {version}"
+    except Exception as e:
+            return f"Error de conexión a MySQL: {str(e)}"
 
+# --- EJECUCIÓN ---
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,9 +1,29 @@
-{% extends "base.html"%}
-{% block title %}Inicio{% endblock %}
+{% extends "base.html" %}
 
-{% block content %}
-<h1>UrbanWalk</h1>
-<p style="color: #b61f1fff; font-style: italic;">Estilo original, Solo en UrbanWalk</p>
+{% block title %}Inicio - UrbanWalk{% endblock %}
 
+{% block contenido %}
+<div class="hero">
+    <h1>🛍️ Bienvenido a UrbanWalk</h1>
+    <p><strong>Estilo original, Solo en UrbanWalk.</strong></p>
+</div>
+
+<section class="menu-rapido">
+    <h2>📌 Secciones del sistema</h2>
+    <ul class="secciones-lista">
+        <li><a href="{{ url_for('index') }}">🏠 Inicio</a></li>
+        <li><a href="{{ url_for('about') }}">ℹ️ Acerca de</a></li>
+        <li><a href="{{ url_for('contacto') }}">📞 Contacto</a></li>
+        <li><a href="{{ url_for('listar_productos') }}">📦 Productos</a></li>
+        <li><a href="/clientes">👥 Clientes</a></li>
+        <li><a href="/usuarios">🔐 Usuarios</a></li>
+        <li><a href="/inventario">📊 Inventario</a></li>
+        <li><a href="/ventas">🛒 Ventas</a></li>
+        <li><a href="/proveedores">🚛 Proveedores</a></li>
+    </ul>
+</section>
+
+<footer class="footer">
+    &copy; 2025 UrbanWalk. Todos los derechos reservados.
+</footer>
 {% endblock %}
-

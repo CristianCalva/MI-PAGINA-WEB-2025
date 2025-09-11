@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block contenido %}
+<h2>{{ title }}</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <label>Nombre del producto:</label><br>
+    {{ form.nombre(class="form-control", size=50, placeholder="Ej: Zapatillas Nike") }}
+    {% if form.nombre.errors %}
+        <div class="text-danger"><small>{{ form.nombre.errors[0] }}</small></div>
+    {% endif %}
+    <br>
+
+    <label>Cantidad:</label><br>
+    {{ form.cantidad(class="form-control", type="number", min="0") }}
+    {% if form.cantidad.errors %}
+        <div class="text-danger"><small>{{ form.cantidad.errors[0] }}</small></div>
+    {% endif %}
+    <br>
+
+    <label>Precio:</label><br>
+    {{ form.precio(class="form-control", type="number", step="0.01", min="0") }}
+    {% if form.precio.errors %}
+        <div class="text-danger"><small>{{ form.precio.errors[0] }}</small></div>
+    {% endif %}
+    <br>
+
+    <button type="submit" class="btn btn-success">Guardar Producto</button>
+    <a href="{{ url_for('listar_productos') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{% endblock %}
