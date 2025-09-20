@@ -1,0 +1,23 @@
+<!-- templates/dashboard.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Panel de Control{% endblock %}
+
+{% block contenido %}
+<div class="card mx-auto mt-5" style="max-width: 600px;">
+    <div class="card-header bg-primary text-white">
+        <h4>🔐 Panel de Control</h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Bienvenido:</strong> {{ current_user.nombre }}</p>
+        <p><strong>Correo:</strong> {{ current_user.email }}</p>
+        <p>Has iniciado sesión correctamente.</p>
+
+        <div class="mt-3">
+            <a href="{{ url_for('listar_productos') }}" class="btn btn-primary">Gestionar Productos</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Cerrar Sesión</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

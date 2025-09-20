@@ -36,7 +36,7 @@ body {
 }
 
 .nav a {
-    color: #fff !important; /* Siempre blanco en el header */
+    color: #cc4e4e !important; /* Siempre blanco en el header */
     font-weight: bold;
     font-size: 18px;
     text-decoration: none;
@@ -193,7 +193,7 @@ table tr:nth-child(even) {
 }
 
 .site-footer a:hover {
-    color: #fff;
+    color: #b45959;
 }
 
 /* ====== SECCION TIENDA ONLINE ====== */

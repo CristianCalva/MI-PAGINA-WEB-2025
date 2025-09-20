@@ -1,0 +1,34 @@
+<!-- templates/contacto.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Contáctanos{% endblock %}
+
+{% block contenido %}
+<div class="card mx-auto mt-5 shadow-sm" style="max-width: 600px;">
+    <div class="card-header bg-info text-white text-center">
+        <h4>📬 Contáctanos</h4>
+    </div>
+    <div class="card-body text-center">
+        <p>¿Tienes preguntas, sugerencias o quieres ser distribuidor?</p>
+        <p>¡Estamos aquí para ayudarte!</p>
+
+        <ul class="list-unstyled">
+            <li class="mb-2"><strong>📧 Correo:</strong> calzado@urbanwalk.com</li>
+            <li class="mb-2"><strong>📱 Instagram:</strong> <a href="https://instagram.com/urbanwalk">@urbanwalk</a></li>
+            <li class="mb-2"><strong>📞 WhatsApp:</strong> +57 300 123 4567</li>
+            <li class="mb-2"><strong>📍 Ciudad:</strong> Lago Agrio, Ecuador</li>
+        </ul>
+
+        <div class="mt-4">
+            <img src="https://ui-avatars.com/api/?name=UrbanWalk&background=17a2b8&color=fff&size=64" 
+                 alt="Logo UrbanWalk" class="rounded-circle mb-2">
+            <p><em>Estilo original. Solo en UrbanWalk.</em></p>
+        </div>
+    </div>
+
+    <div class="card-footer text-center">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-sm">← Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}

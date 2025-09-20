@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block contenido %}
+<h2>{{ '📝 Nuevo Usuario' if not usuario else '✏️ Editar Usuario' }}</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <label>{{ form.nombre.label }}</label><br>
+    {{ form.nombre(class="form-control", size=50) }}<br>
+    {% for error in form.nombre.errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
+
+    <label>{{ form.mail.label }}</label><br>
+    {{ form.mail(class="form-control", size=50) }}<br>
+    {% for error in form.mail.errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
+
+    <label>{{ form.password.label }} <small class="text-muted">(opcional)</small></label><br>
+    {{ form.password(class="form-control", size=50) }}<br>
+    {% for error in form.password.errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
+
+    {{ form.submit(class="btn btn-primary") }}
+</form>
+
+<br>
+<a href="{{ url_for('listar_usuarios') }}" class="btn btn-secondary">← Volver</a>
+{% endblock %}
