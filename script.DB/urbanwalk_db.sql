@@ -37,6 +37,7 @@ CREATE TABLE `productos` (
   `precio` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
 --
 -- Volcado de datos para la tabla `productos`
 --
@@ -54,7 +55,8 @@ INSERT INTO `productos` (`id`, `nombre`, `cantidad`, `precio`) VALUES
 CREATE TABLE `usuarios` (
   `id_usuario` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `mail` varchar(100) NOT NULL
+  `mail` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
