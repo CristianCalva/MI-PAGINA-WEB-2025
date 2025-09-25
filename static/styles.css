@@ -5,45 +5,48 @@
     box-sizing: border-box;
 }
 
-body, h1, h2, h3, p, ul, li, a, button {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body, h1, h2, h3, p, ul, li, a, button, .btn {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
 }
 
 /* ====== BODY ====== */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f8f8;
-    color: #333;
-    line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 /* ====== HEADER Y NAVEGACIÓN ====== */
-.site-header {
-    background-color: #6ee2e4; /* Azul más fuerte */
+.site-header,
+header.bg-success.text-white.p-3.mb-4 {
+    background-color: #5c6022 !important; /* Color principal del header */
     padding: 20px 0;
 }
 
-.nav {
+.nav,
+.navbar-nav {
     display: flex;
     justify-content: center;
     gap: 40px;
     flex-wrap: wrap;
 }
 
-.nav a {
-    color: #cc4e4e !important; /* Siempre blanco en el header */
+.nav a,
+.navbar-nav .nav-link,
+header.bg-success.text-white.p-3.mb-4 .nav a {
+    color: #cc4e4e !important;
     font-weight: bold;
     font-size: 18px;
     text-decoration: none;
 }
 
-.nav a:hover {
-    color: #ffce00 !important; /* efecto al pasar mouse */
+.nav a:hover,
+.navbar-nav .nav-link:hover,
+header.bg-success.text-white.p-3.mb-4 .nav a:hover {
+    color: #ffce00 !important; /* Efecto hover */
 }
 
 /* ====== CONTENEDOR PRINCIPAL ====== */
@@ -53,11 +56,11 @@ body {
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     flex: 1;
 }
 
-/* ====== TITULOS ====== */
+/* ====== TÍTULOS ====== */
 h1 {
     text-align: center;
     font-size: 36px;
@@ -88,7 +91,7 @@ p {
     text-align: justify;
 }
 
-/* ====== LISTAS ====== */
+/* ====== LISTAS DE NAVEGACIÓN ====== */
 ul {
     list-style-type: none;
     display: flex;
@@ -104,6 +107,7 @@ ul li a {
     color: #fff;
     border-radius: 5px;
     transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 ul li a:hover {
@@ -122,6 +126,8 @@ button, .btn {
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin: 2px;
+    text-decoration: none;
+    display: inline-block;
 }
 
 button:hover, .btn:hover {
@@ -129,7 +135,6 @@ button:hover, .btn:hover {
     color: #ffce00;
 }
 
-/* Botones secundarios */
 .btn-secondary {
     background-color: #95a5a6;
 }
@@ -179,54 +184,54 @@ table tr:nth-child(even) {
 .flash.error   { background-color: #e74c3c; color: #fff; }
 
 /* ====== FOOTER ====== */
-.site-footer {
+footer {
     background-color: #2c3e50;
-    color: #fff;
+    color: #ecf0f1;
+    padding: 40px 0;
+    border-top: 1px solid #3498db;
     text-align: center;
-    padding: 20px 0;
-    font-size: 14px;
+    font-weight: 500;
     margin-top: auto;
 }
 
-.site-footer a {
-    color: #ffce00;
+footer a {
+    color: #3ec1ed !important;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
-.site-footer a:hover {
-    color: #b45959;
+footer a:hover {
+    color: #ffffff !important;
 }
 
-/* ====== SECCION TIENDA ONLINE ====== */
+/* ====== SECCIÓN TIENDA ONLINE (opcional) ====== */
 .tienda-online {
-    background-color: #a00b30; /* verde */
-    color: #5c5816; /* texto blanco */
+    background-color: #a00b30;
+    color: #5c5816;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
 }
 
+/* ====== ENLACES POR CATEGORÍA (opcional) ====== */
+.link-inicio    { color: #FF6600; }
+.link-formulario{ color: #00CCFF; }
+.link-txt       { color: #FF00FF; }
+.link-json      { color: #00FF00; }
+.link-csv       { color: #FFFF00; }
+.link-sqlite    { color: #FF0000; }
+
 /* ====== RESPONSIVIDAD ====== */
 @media (max-width: 768px) {
-    .nav {
+    .nav, .navbar-nav {
         flex-direction: column;
         gap: 15px;
     }
 
-    h1 {
-        font-size: 28px;
-    }
-
-    h2 {
-        font-size: 22px;
-    }
-
-    h3 {
-        font-size: 18px;
-    }
-
-    p {
-        font-size: 15px;
-    }
+    h1 { font-size: 28px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 18px; }
+    p  { font-size: 15px; }
 
     ul {
         flex-direction: column;
@@ -237,61 +242,4 @@ table tr:nth-child(even) {
         font-size: 13px;
         padding: 5px 10px;
     }
-}
-
-/* ====== ENLACES FIJOS COLORES ====== */
-.link-inicio { color: #FF6600; }
-.link-formulario { color: #00CCFF; }
-.link-txt { color: #FF00FF; }
-.link-json { color: #00FF00; }
-.link-csv { color: #FFFF00; }
-.link-sqlite { color: #FF0000; }
-
-.nav a:hover {
-    opacity: 0.7;
-}
-
-.nav a {
-    color: #FF6600 !important;
-    text-decoration: none;
-}
-
-.nav a:hover {
-    color: #00CCFF !important;
-}
-/* Cambiar color del header principal */
-.site-header {
-    background-color: #5c6022 !important; /* Azul intenso */
-}
-
-/* Cambiar color de la barra superior (si tienes otra clase .bg) */
-.bg {
-    background-color: #3ec1ed !important; /* Azul más claro */
-}
-
-/* Opcional: cambiar color de los enlaces dentro del header */
-.site-header .nav a {
-    color: #2b940e !important; /* Blanco */
-}
-
-.site-header .nav a:hover {
-    color: #FFD700 !important; /* Amarillo al pasar mouse */
-}
-/* Header principal: Tienda Online */
-header.bg-success.text-white.p-3.mb-4 {
-    background-color: #2876a7 !important; /* Cambia #28a745 por el color que quieras */
-    color: #ca1616 !important; /* Texto blanco */
-}
-
-/* Enlaces del header */
-header.bg-success.text-white.p-3.mb-4 .nav a {
-    color: #7d5757 !important; /* enlaces en blanco */
-    font-weight: bold;
-    margin-right: 15px;
-    text-decoration: none;
-}
-
-/* Hover de los enlaces */
-header.bg-success.text-white.p-3.mb-4 .nav a:hover {
-    color: #ffce00 !important; /* amarillo al pasar el mouse */
 }

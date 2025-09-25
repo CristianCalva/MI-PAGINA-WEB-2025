@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Inventario{% endblock %}
-
 {% block contenido %}
-<h1>Inventario</h1>
-
-<form method="get" action="{{ url_for('listar_productos') }}" class="form-inline">
-  <input type="text" name="q" placeholder="Buscar por nombre" value="{{ q or '' }}">
-  <button type="submit" class="btn">Buscar</button>
-  <a class="btn btn-primary" href="{{ url_for('crear_producto') }}">Nuevo</a>
+<h2>📦 Inventario</h2>
+<form method="get" action="{{ url_for('listar_productos') }}" class="mb-4">
+  <div class="input-group">
+    <input type="text" name="q" class="form-control" placeholder="Buscar producto..." value="{{ q or '' }}">
+    <button class="btn btn-success">🔍 Buscar</button>
+    <a href="{{ url_for('crear_producto') }}" class="btn btn-primary ms-2">➕ Nuevo</a>
+  </div>
 </form>
 
 {% if productos %}
-<table class="table">
-  <thead>
+<table class="table table-striped">
+  <thead class="table-dark">
     <tr>
       <th>ID</th>
       <th>Nombre</th>
@@ -22,17 +22,17 @@
     </tr>
   </thead>
   <tbody>
-    {% for p in productos or [] %}
+    {% for p in productos %}
     <tr>
       <td>{{ p.id }}</td>
       <td>{{ p.nombre }}</td>
-      <td>{{ p.cantidad }}</td>
-      <td>${{ '%.2f'|format(p.precio) }}</td>
+      <td><span class="badge bg-primary">{{ p.cantidad }}</span></td>
+      <td><strong>${{ "%.2f"|format(p.precio) }}</strong></td>
       <td>
-        <a class="btn btn-small" href="{{ url_for('editar_producto', id=p.id) }}">Editar</a>
+        <a href="{{ url_for('editar_producto', id=p.id) }}" class="btn btn-sm btn-warning me-1">✏️</a>
         <form method="post" action="{{ url_for('eliminar_producto', id=p.id) }}" style="display:inline"
               onsubmit="return confirm('¿Eliminar {{ p.nombre }}?');">
-          <button type="submit" class="btn btn-danger btn-small">Eliminar</button>
+          <button class="btn btn-sm btn-danger">🗑️</button>
         </form>
       </td>
     </tr>
@@ -40,6 +40,6 @@
   </tbody>
 </table>
 {% else %}
-<p>No hay productos para mostrar.</p>
+<div class="alert alert-info text-center">📭 No hay productos.</div>
 {% endif %}
 {% endblock %}
