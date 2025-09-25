@@ -44,7 +44,11 @@ CREATE TABLE `productos` (
 
 INSERT INTO `productos` (`id`, `nombre`, `cantidad`, `precio`) VALUES
 (1, 'Camiseta Nike', 20, 22.00),
-(2, 'Balón Mikasa N-° 4', 30, 60.00);
+(2, 'Balón Mikasa N-° 4', 30, 60.00),
+(3, 'Zapatillas NikeCourt', 30, 40.75),
+(4, 'Zapatos Puma', 60, 75.55),
+(5, 'Gorras', 100, 12.75),
+(6, 'Zapatillas Nike Air Max', 10, 120.50);
 
 -- --------------------------------------------------------
 
