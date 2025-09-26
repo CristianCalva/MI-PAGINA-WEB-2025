@@ -48,7 +48,9 @@ INSERT INTO `productos` (`id`, `nombre`, `cantidad`, `precio`) VALUES
 (3, 'Zapatillas NikeCourt', 30, 40.75),
 (4, 'Zapatos Puma', 60, 75.55),
 (5, 'Gorras', 100, 12.75),
-(6, 'Zapatillas Nike Air Max', 10, 120.50);
+(6, 'Zapatillas Nike Air Max', 10, 120.50),
+(7, 'Sudadera Adidas', 55, 60.00),
+
 
 -- --------------------------------------------------------
 
@@ -66,6 +68,9 @@ CREATE TABLE `usuarios` (
 --
 -- Índices para tablas volcadas
 --
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `email`, `password`) VALUES 
+(NULL, 'Cristian', 'cristiancalva@gmail.com', 'pbkdf2:sha256:1000000$4DEK0usVlSJjivvv$994b9e95e8c9d0b80b50b3595780f607241d26fcf4baa9f3819e54abda92f7e8'), 
+(NULL, 'Paul', 'paul95@gmail.com', 'pbkdf2:sha256:1000000$34OHV6zuzLmSFbMt$2f74ef7def7d6a44e92042c9cd92ee61bc6131a8015f4771516b61ac1ca4590c');
 
 --
 -- Indices de la tabla `clientes`
