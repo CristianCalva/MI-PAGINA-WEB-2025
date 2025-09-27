@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{{ 'Nuevo Usuario' if modo=='crear' else 'Editar Usuario' }}{% endblock %}
 
 {% block contenido %}
 <h2>{{ '📝 Nuevo Usuario' if not usuario else '✏️ Editar Usuario' }}</h2>
@@ -12,12 +12,12 @@
     {{ form.nombre(class="form-control", size=50) }}<br>
     {% for error in form.nombre.errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
 
-    <label>{{ form.mail.label }}</label><br>
-    {{ form.mail(class="form-control", size=50) }}<br>
-    {% for error in form.mail.errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
+    <label>{{ form.email.label }}</label><br>
+    {{ form.email(class="form-control", size=50) }}<br>
+    {% for error in form.email.errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
 
     <label>{{ form.password.label }} <small class="text-muted">(opcional)</small></label><br>
-    {{ form.password(class="form-control", size=50) }}<br>
+    {{ form.password(class="form-control", placeholder="Deja vacío para mantener la contraseña actual") }}<br>
     {% for error in form.password.errors %}<div class="alert alert-danger">{{ error }}</div>{% endfor %}
 
     {{ form.submit(class="btn btn-primary") }}

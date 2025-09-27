@@ -47,8 +47,11 @@ class Usuario(db.Model, UserMixin):
     def get_id(self):
         return str(self.id_usuario)
 
+
     def __repr__(self):
         return f'<Usuario {self.id_usuario} {self.nombre}>'
 
     def to_tuple(self):
         return (self.id_usuario, self.nombre, self.email)
+    
+    

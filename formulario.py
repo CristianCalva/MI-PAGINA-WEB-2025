@@ -1,20 +1,8 @@
 # formulario.py
 
 from flask_wtf import FlaskForm
-from wtforms import (
-    StringField,
-    PasswordField,
-    SubmitField,
-    IntegerField,
-    FloatField
-)
-from wtforms.validators import (
-    DataRequired,
-    Email,
-    EqualTo,
-    Length,
-    NumberRange
-)
+from wtforms import (StringField, PasswordField, SubmitField, IntegerField, FloatField)
+from wtforms.validators import (DataRequired, Email, EqualTo, Length, NumberRange, Optional as WtOptional)
 
 class ProductoForm(FlaskForm):
     nombre = StringField('Nombre', validators=[DataRequired(message="El nombre es obligatorio.")])
@@ -50,7 +38,15 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Iniciar Sesión')
 
 class UsuarioForm(FlaskForm):
-    nombre = StringField('Nombre', validators=[DataRequired()])
+    nombre = StringField('Nombre', validators=[DataRequired(message="El nombre es obligatorio.")])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Nueva Contraseña (opcional)', validators=[Length(min=6)])
+    
+    # Solo requiere longitud si se ingresa algo
+    password = PasswordField(
+        'Nueva Contraseña (opcional)',
+        validators=[
+            WtOptional(),           # No es obligatorio
+            Length(min=6, message="La contraseña debe tener al menos 6 caracteres.")
+        ]
+    )
     submit = SubmitField('Guardar')

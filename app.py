@@ -36,7 +36,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    return render_template('index.html', title='Inicio')
+    return render_template('index.html', title='UrbanWalk')
 
 @app.route('/about')
 def about():
@@ -116,7 +116,6 @@ def eliminar_producto(id):
         flash(f'❌ No se pudo eliminar: {str(e)}', 'danger')
     return redirect(url_for('listar_productos'))
 
-
 # === LOGIN Y REGISTRO ===
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -143,7 +142,7 @@ def registro():
             flash('❌ Este email ya está registrado.', 'danger')
         else:
             hashed = generate_password_hash(form.password.data, method='pbkdf2:sha256')
-            user = Usuario(nombre=form.nombre.data, email=form.email.data, password=hashed)
+            user = Usuario(nombre=form.nombre.data, email=form.email.data, password=hashed,)
             try:
                 db.session.add(user)
                 db.session.commit()
@@ -166,10 +165,82 @@ def dashboard():
     return render_template('dashboard.html', title='Panel')
 
 @app.route('/usuarios')
-@login_required
+@login_required # 👈 Solo usuarios logueados
 def listar_usuarios():
-    users = Usuario.query.all()
-    return render_template('usuarios/lista.html', usuarios=users, title='Usuarios')
+    
+    page = request.args.get('page', 1, type=int)
+
+    # Paginar: 5 usuarios por página
+    pagination = Usuario.query.paginate(
+        page=page,
+        per_page=5,
+        error_out=False  # No lanza error si la página no existe
+    )
+    
+    usuarios = pagination.items
+    return render_template('usuarios/lista.html',
+                         title='Usuarios del Sistema',
+                         usuarios=usuarios,
+                         pagination=pagination)
+    
+    # === EDITAR USUARIO ===
+@app.route('/usuarios/<int:id>/editar', methods=['GET', 'POST'])
+@login_required # 👈 Solo usuarios logueados
+def editar_usuario(id):
+    usuario = Usuario.query.get_or_404(id)
+    form = UsuarioForm(obj=usuario)
+
+    # No llenar el campo de contraseña si no se cambia
+    if request.method == 'GET':
+        form.password.data = ''  # Limpiar para seguridad visual
+
+    if form.validate_on_submit():
+        # Verificar si el email ya existe (y no es el mismo usuario)
+        if form.email.data != usuario.email:
+            if Usuario.query.filter_by(email=form.email.data).first():
+                flash('❌ Ya existe un usuario con ese correo.', 'danger')
+                return render_template('usuarios/formulario.html', form=form, modo='editar', title='Editar Usuario')
+
+        # Actualizar datos
+        usuario.nombre = form.nombre.data
+        usuario.email = form.email.data
+
+        # Solo actualizar contraseña si fue ingresada
+        if form.password.data: # Solo si se agrego algo
+            usuario.password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
+
+        try:
+            db.session.commit()
+            flash('✅ Usuario actualizado correctamente.', 'success')
+            return redirect(url_for('listar_usuarios'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'❌ Error al actualizar: {str(e)}', 'danger')
+
+    return render_template('usuarios/formulario.html', form=form, modo='editar', title='Editar Usuario')
+
+
+# === ELIMINAR USUARIO ===
+@app.route('/usuarios/<int:id>/eliminar', methods=['POST'])
+@login_required # 👈 Solo usuarios logueados
+def eliminar_usuario(id):
+    usuario = Usuario.query.get_or_404(id)
+
+    # No puedes eliminarte a ti mismo
+    if current_user.id_usuario == id:
+        flash('❌ No puedes eliminarte a ti mismo.', 'warning')
+        return redirect(url_for('listar_usuarios'))
+
+    nombre = usuario.nombre
+    try:
+        db.session.delete(usuario)
+        db.session.commit()
+        flash(f'✅ Usuario "{nombre}" eliminado.', 'info')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'❌ No se pudo eliminar el usuario: {str(e)}', 'danger')
+
+    return redirect(url_for('listar_usuarios'))
 
 
 # === EJECUCIÓN ===
