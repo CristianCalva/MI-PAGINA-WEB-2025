@@ -16,6 +16,7 @@
     <tr>
       <th>ID</th>
       <th>Nombre</th>
+      <th>Categoría</th>
       <th>Cantidad</th>
       <th>Precio</th>
       <th>Acciones</th>
@@ -26,6 +27,7 @@
     <tr>
       <td>{{ p.id }}</td>
       <td>{{ p.nombre }}</td>
+      <td><span class="badge bg-secondary">{{ p.categoria.nombre }}</span></td>
       <td><span class="badge bg-primary">{{ p.cantidad }}</span></td>
       <td><strong>${{ "%.2f"|format(p.precio) }}</strong></td>
       <td>

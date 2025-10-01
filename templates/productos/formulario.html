@@ -25,6 +25,12 @@
         {% for e in form.precio.errors %}<div class="text-danger small">• {{ e }}</div>{% endfor %}
       </div>
 
+      <div class="mb-3">
+        {{ form.id_categoria.label(class="form-label") }}
+        {{ form.id_categoria(class="form-control") }}
+        {% for e in form.id_categoria.errors %}<div class="text-danger small">• {{ e }}</div>{% endfor %}
+      </div>
+
       <div class="d-grid gap-2 d-md-flex mt-4">
         {{ form.submit(class="btn btn-success") }}
         <a href="{{ url_for('listar_productos') }}" class="btn btn-secondary">Cancelar</a>

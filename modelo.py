@@ -11,12 +11,21 @@ class Producto(db.Model):
     nombre = db.Column(db.String(120), unique=True, nullable=False)
     cantidad = db.Column(db.Integer, nullable=False, default=0)
     precio = db.Column(db.Float, nullable=False, default=0.0)
-
+    id_categoria = db.Column(db.Integer, db.ForeignKey('categorias.id_categoria'), nullable=False)
+    
+    categoria = db.relationship('Categoria', backref='productos')
+    
     def __repr__(self):
         return f'<Producto {self.id} {self.nombre}>'
+    
+class Categoria(db.Model):
+    __tablename__ = 'categorias'
+    id_categoria = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(50), unique=True, nullable=False)
+    descripcion = db.Column(db.String(200), nullable=True)
 
-    def to_tuple(self):
-        return (self.id, self.nombre, self.cantidad, self.precio)
+    def __repr__(self):
+        return self.nombre
 
 
 class Cliente(db.Model):

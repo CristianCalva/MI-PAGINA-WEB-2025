@@ -1,7 +1,7 @@
 # formulario.py
 
 from flask_wtf import FlaskForm
-from wtforms import (StringField, PasswordField, SubmitField, IntegerField, FloatField)
+from wtforms import (StringField, PasswordField, SubmitField, IntegerField, FloatField, SelectField)
 from wtforms.validators import (DataRequired, Email, EqualTo, Length, NumberRange, Optional as WtOptional)
 
 class ProductoForm(FlaskForm):
@@ -14,7 +14,9 @@ class ProductoForm(FlaskForm):
         DataRequired(message="El precio es obligatorio."),
         NumberRange(min=0.0, message="No puede ser negativo.")
     ])
+    id_categoria = SelectField('ID Categoría', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Guardar')
+    
 
 class ClienteForm(FlaskForm):
     nombre = StringField('Nombre', validators=[DataRequired()])
